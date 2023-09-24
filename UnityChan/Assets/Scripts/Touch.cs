@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -43,6 +43,7 @@ public class Touch : MonoBehaviour
                     animator.SetBool("Face_Angry", false);
                     univoice.clip = voice1;
                     univoice.Play();
+					MsgDisp.ShowMessage("안녕!\n오늘도 힘차게 시작해보자!");
                 }
                 else if(hitObj.tag == "Body")
 				{
@@ -51,8 +52,9 @@ public class Touch : MonoBehaviour
                     animator.SetBool("Face_Angry", true);
                     univoice.clip = voice2;
                     univoice.Play();
-                }
-            }
+					MsgDisp.ShowMessage("꺅!");
+				}
+			}
         }
     }
 }
