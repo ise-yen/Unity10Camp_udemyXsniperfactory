@@ -8,6 +8,7 @@ public class MsgDisp : MonoBehaviour
 	public static bool flagDisplay = false;
 	public GUIStyle guiDisplay;
 	public static int msgLen; // 출력 속도
+	public static float waitDelay; // 메세지 초기화 전 딜레이 속도
 
 	private float nextTime = 0;
 	private Rect rtDisplay = new Rect();
@@ -62,25 +63,26 @@ public class MsgDisp : MonoBehaviour
 		MsgDisp.msg = msg;
 		flagDisplay = true;
 		msgLen = 0;
+		waitDelay = 0;
 	}
-
-	// Behaviour를 사용하도록 설정한 경우 Update가 프레임마다 호출됩니다.
-	private void FixedUpdate()
-	{
-		if(flagDisplay && Time.time > nextTime)
-		{
-			if (msgLen < msg.Length) msgLen++;
-			nextTime = Time.time + 0.02f;
-		}
-	}
-
-	private void Start()
-    {
-        
-    }
 
     private void Update()
     {
-        
-    }
+		if (flagDisplay && Time.time > nextTime)
+		{
+			if (msgLen < msg.Length)
+			{
+				if(Time.time > nextTime)
+				{
+					msgLen++;
+					nextTime = Time.time + 0.02f;
+				}
+			}
+			else
+			{
+				waitDelay += Time.deltaTime;
+				if (waitDelay > 1 + msg.Length / 4) flagDisplay = false;
+			}
+		}
+	}
 }
