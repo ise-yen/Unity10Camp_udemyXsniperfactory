@@ -7,7 +7,9 @@ public class MsgDisp : MonoBehaviour
 	public static string msg;
 	public static bool flagDisplay = false;
 	public GUIStyle guiDisplay;
+	public static int msgLen; // 출력 속도
 
+	private float nextTime = 0;
 	private Rect rtDisplay = new Rect();
 
 	// OnGUI는 GUI 이벤트를 렌더링 및 처리하기 위해 호출
@@ -44,13 +46,13 @@ public class MsgDisp : MonoBehaviour
 			msgFont.normal.textColor = Color.black;
 			rtDisplay.x = (guiLeft + 22) * gui_scale;
 			rtDisplay.y = (guiTop + 22) * gui_scale;
-			GUI.Label(rtDisplay, msg, msgFont);
+			GUI.Label(rtDisplay, msg.Substring(0, msgLen), msgFont);
 
 			// 메세지 출력
 			msgFont.normal.textColor = Color.white;
 			rtDisplay.x = (guiLeft + 20) * gui_scale;
 			rtDisplay.y = (guiTop + 20) * gui_scale;
-			GUI.Label(rtDisplay, msg, msgFont);
+			GUI.Label(rtDisplay, msg.Substring(0, msgLen), msgFont);
 		}
 	}
 
@@ -59,6 +61,17 @@ public class MsgDisp : MonoBehaviour
 	{
 		MsgDisp.msg = msg;
 		flagDisplay = true;
+		msgLen = 0;
+	}
+
+	// Behaviour를 사용하도록 설정한 경우 Update가 프레임마다 호출됩니다.
+	private void FixedUpdate()
+	{
+		if(flagDisplay && Time.time > nextTime)
+		{
+			if (msgLen < msg.Length) msgLen++;
+			nextTime = Time.time + 0.02f;
+		}
 	}
 
 	private void Start()
