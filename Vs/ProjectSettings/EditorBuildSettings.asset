@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/02_vsAI.unity
+    guid: 2591c77785b936b4887bb600157a9678
   m_configObjects: {}
